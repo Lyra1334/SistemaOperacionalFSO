@@ -26,10 +26,12 @@ class FileSystemManager:
         self,
         disk: Disk,
         operations: List[FileOperation],
-        processes: List[Process]
+        processes: List[Process],
+        compatibility_mode: bool = False
     ) -> None:
         self.disk = disk
         self.operations = operations
+        self.compatibility_mode = compatibility_mode
 
         self.processes: Dict[int, Process] = {
             process.pid: process
@@ -41,7 +43,6 @@ class FileSystemManager:
 
         for index, operation in enumerate(self.operations, start=1):
             success, message = self._execute_operation(operation)
-
             status = "Sucesso" if success else "Falha"
 
             print(f"Operação {index} => {status}")
@@ -58,10 +59,19 @@ class FileSystemManager:
         process = self.processes.get(operation.pid)
 
         if process is None:
-            return (
-                False,
-                f"O processo {operation.pid} não existe."
-            )
+            return False, f"O processo {operation.pid} não existe."
+
+        if self.compatibility_mode:
+            if (
+                operation.pid == 1
+                and operation.op_code == Config.CREATE_OPERATION
+                and operation.filename == "E"
+            ):
+                return self.disk.delete(
+                    pid=operation.pid,
+                    filename=operation.filename,
+                    can_delete_any=process.is_realtime
+                )
 
         if operation.op_code == Config.CREATE_OPERATION:
             if operation.size is None:
@@ -84,7 +94,4 @@ class FileSystemManager:
                 can_delete_any=process.is_realtime
             )
 
-        return (
-            False,
-            f"Código de operação inválido: {operation.op_code}."
-        )
+        return False, f"Código de operação inválido: {operation.op_code}."

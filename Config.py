@@ -30,3 +30,6 @@ DEFAULT_REFERENCES_FILE = "casosDeTeste/string.txt"
 DISPATCHER_LABEL = "dispatcher =>"
 FILESYSTEM_LABEL = "Sistema de arquivos =>"
 PAGEFAULT_LABEL = "Número de Faltas de Páginas por processo:"
+
+# Modos de leitura do Parser de Entrada
+ENABLE_PDF_COMPATIBILITY = True

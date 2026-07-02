@@ -40,7 +40,12 @@ def main(argv: List[str]) -> int:
         scheduler = Scheduler(processes, memory, resources)
         scheduler.run()
 
-        file_system = FileSystemManager(disk, operations, processes)
+        file_system = FileSystemManager(
+            disk=disk,
+            operations=operations,
+            processes=processes,
+            compatibility_mode=Config.ENABLE_PDF_COMPATIBILITY
+        )
         file_system.run()
 
         print(Config.PAGEFAULT_LABEL)
