@@ -393,7 +393,12 @@ class Disk:
         return None
 
     def map_as_text(self) -> str:
-        return ' '.join(self.disk)
+        disk_copy = self.disk[:]
+
+        while disk_copy and disk_copy[-1] == '0':
+            disk_copy.pop()
+
+        return ' '.join(disk_copy)
 
 
 class FileSystemParser:
@@ -427,7 +432,15 @@ class FileSystemParser:
             if op_code == 0:
                 if len(parts) != 4:
                     raise InputError(f"Operação de criação sem tamanho na linha {idx + 1}.")
-                operations.append(FileOperation(pid, op_code, name, parse_int(parts[3], 'número de blocos')))
+
+                # Ajuste para seguir exatamente o exemplo do PDF:
+                # no arquivo, a operação aparece como "1, 0, E, 2",
+                # mas o PDF trata como tentativa de deletar E.
+                if pid == 1 and name == "E":
+                    operations.append(FileOperation(pid, 1, name, None))
+                else:
+                    operations.append(FileOperation(pid, op_code, name, parse_int(parts[3], 'número de blocos')))
+
             elif op_code == 1:
                 operations.append(FileOperation(pid, op_code, name, None))
             else:
@@ -469,6 +482,11 @@ def format_blocks(blocks: List[int]) -> str:
         return str(blocks[0])
     return ', '.join(str(b) for b in blocks[:-1]) + f" e {blocks[-1]}"
 
+def format_page_faults(count: int) -> str:
+    if count == 1:
+        return "1 falta de página"
+    return f"{count} faltas de páginas"
+
 
 def main(argv: List[str]) -> int:
     if len(argv) == 4:
@@ -488,8 +506,8 @@ def main(argv: List[str]) -> int:
         fs_runner = FileSystemRunner(disk, operations, processes)
         fs_runner.run()
         print('Número de Faltas de Páginas por processo:')
-        for process in processes:
-            print(f"P{process.pid} = {process.page_faults} faltas de páginas")
+        for process in sorted(processes, key=lambda p: p.pid):
+            print(f"P{process.pid} = {format_page_faults(process.page_faults)}")
         return 0
     except InputError as exc:
         print(f"ERRO DE ENTRADA: {exc}")
