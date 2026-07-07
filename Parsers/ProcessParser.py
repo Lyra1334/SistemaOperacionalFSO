@@ -39,7 +39,7 @@ class ProcessParser:
             arrival_time = parse_int(parts[0], "tempo de inicialização")
             priority = parse_int(parts[1], "prioridade")
             cpu_time = parse_int(parts[2], "tempo de processador")
-            working_set = parse_int(parts[3], "working set")
+            working_set = min(parse_int(parts[3], "working set"), Config.USER_MEMORY_FRAMES)
 
             printer = parse_01(parts[4], "requisição de impressora")
             scanner = parse_01(parts[5], "requisição de scanner")
