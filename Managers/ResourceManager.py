@@ -28,7 +28,10 @@ class ResourceManager:
             "sata": Config.TOTAL_SATA_DRIVES,
         }
     
-    def verify_process(self, process:Process):
+    def verify_process(self, process:Process) -> bool:
+        """
+        Verifica se um processo pede mais recursos que físicamente disponível.
+        """
         if (process.scanner > Config.TOTAL_SCANNERS or
             process.printer > Config.TOTAL_PRINTERS or
             process.modem > Config.TOTAL_MODEMS or
