@@ -54,6 +54,7 @@ class Scheduler:
         self.clock = 0
         self.next_arrival_index = 0
         self.finished: List[Process] = []
+        self.last_pid = None
 
     def run(self) -> None:
         while len(self.finished) < len(self.processes):
@@ -80,6 +81,14 @@ class Scheduler:
                 print(
                     f"dispatcher => Processo {process.pid} rejeitado: "
                     "working set maior que a área de memória permitida."
+                )
+                self.finished.append(process)
+                continue
+
+            if not self.resources.verify_process(process):
+                print(
+                    f"dispatcher => Processo {process.pid} rejeitado: "
+                    "requer mais recursos do que o possúido pelo sistema."
                 )
                 self.finished.append(process)
                 continue
@@ -130,10 +139,12 @@ class Scheduler:
         return None
 
     def _execute(self, process: Process) -> None:
-        self.dispatcher.show_process_info(process)
 
-        print(f"process {process.pid} =>")
-        print(f"P{process.pid} STARTED")
+        if self.last_pid != process.pid:
+            self.dispatcher.show_process_info(process)
+
+            print(f"process {process.pid} =>")
+            print(f"P{process.pid} STARTED")
 
         self.memory.simulate_references(process)
 
@@ -167,6 +178,7 @@ class Scheduler:
 
         self._enqueue(process)
         self._aging()
+        self.last_pid = process.pid
 
     def _aging(self) -> None:
         """
