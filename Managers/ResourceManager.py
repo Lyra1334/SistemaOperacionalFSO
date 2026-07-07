@@ -27,6 +27,16 @@ class ResourceManager:
             "modem": Config.TOTAL_MODEMS,
             "sata": Config.TOTAL_SATA_DRIVES,
         }
+    
+    def verify_process(self, process:Process):
+        if (process.scanner > Config.TOTAL_SCANNERS or
+            process.printer > Config.TOTAL_PRINTERS or
+            process.modem > Config.TOTAL_MODEMS or
+            process.sata > Config.TOTAL_SATA_DRIVES):
+            return False
+        else:
+            return True
+
 
     def required(self, process: Process) -> Dict[str, int]:
         """
