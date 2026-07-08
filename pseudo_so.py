@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+"""
+CÓDIGO LEGADO (Monolítico):
+Este arquivo contém a implementação monolítica original desenvolvida pela equipe.
+Os arquivos de testes que originalmente ficavam em 'casosDeTeste/' foram unificados e movidos
+para a pasta 'testes/casosDeTeste/'.
+A execução atualizada deste monolítico foi preservada e atualizada em main() com as novas rotas.
+"""
 from __future__ import annotations
 
 import sys

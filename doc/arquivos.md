@@ -29,10 +29,10 @@ Especificação de comportamento do disco contíguo e operações de arquivos.
 * **Implementação**: [execute em FileSystemManager.py:L64-L74](file:///C:/Users/Eduardo/Documents/GitHub/SistemaOperacionalFSO-V2/Managers/FileSystemManager.py#L64-L74)
 
 ### - [x] Cenário: Rejeição de tamanho de disco incompatível ou estouro
-* **Dado** que o simulador aceita um disco lógico de até 1024 blocos (limite clássico de 1 MB para blocos de 1 KB)
-* **Quando** o interpretador de arquivos lê um tamanho de disco maior que 1024 blocos ou uma operação de escrita que excede o espaço físico total
+* **Dado** que o simulador aceita um disco lógico de até 32768 blocos (limite físico de 32 MB para blocos de 1 KB)
+* **Quando** o interpretador de arquivos lê um tamanho de disco maior que 32768 blocos ou uma operação de escrita que excede o espaço físico total
 * **Então** o parser impede a inicialização gerando `InputError` imediatamente
-* **Implementação**: [FileSystemParser.py:L40-L45](file:///C:/Users/Eduardo/Documents/GitHub/SistemaOperacionalFSO-V2/Parsers/FileSystemParser.py#L40-L45) e validação dos blocos excedentes em [FileSystemParser.py:L73-L81](file:///C:/Users/Eduardo/Documents/GitHub/SistemaOperacionalFSO-V2/Parsers/FileSystemParser.py#L73-L81)
+* **Implementação**: [FileSystemParser.py:L40-L51](file:///C:/Users/Eduardo/Documents/GitHub/SistemaOperacionalFSO-V2/Parsers/FileSystemParser.py#L40-L51) e validação dos blocos excedentes em [FileSystemParser.py:L76-L81](file:///C:/Users/Eduardo/Documents/GitHub/SistemaOperacionalFSO-V2/Parsers/FileSystemParser.py#L76-L81)
 
 ### - [x] Cenário: Prevenção de vazamento de diretório (Directory Traversal)
 * **Dado** que arquivos devem ser isolados sob o disco lógico do simulador

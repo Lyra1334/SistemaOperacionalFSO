@@ -26,4 +26,4 @@ Especificação de comportamento da paginação virtual e LRU local.
 * **Dado** que o sistema simula um espaço de endereçamento de 16 bits clássico (64 KB) com páginas de 1 KB (conforme especificação do PDF)
 * **Quando** o parser lê uma página fora do intervalo de 0 a 63 (64 páginas virtuais no total)
 * **Então** o sistema acusa erro de segmentação levantando `InputError` imediatamente
-* **Implementação**: [Validação de limites em ProcessParser.py:L74-L80](file:///C:/Users/Eduardo/Documents/GitHub/SistemaOperacionalFSO-V2/Parsers/ProcessParser.py#L74-L80)
+* **Implementação**: [Validação de limites em ProcessParser.py:L82-L89](file:///C:/Users/Eduardo/Documents/GitHub/SistemaOperacionalFSO-V2/Parsers/ProcessParser.py#L82-L89)

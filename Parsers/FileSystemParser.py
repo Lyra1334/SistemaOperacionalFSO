@@ -39,8 +39,16 @@ class FileSystemParser:
 
         disk_size = parse_int(lines[0], "Quantidade de blocos do disco")
         
+<<<<<<< HEAD
         # Restrição física do tamanho do disco simulado (máximo de 32 MB / 32768 blocos de 1 KB).
         # Este limite pode ser alterado se houver necessidade de simular capacidades maiores.
+=======
+        # --- LIMITAÇÃO DE DISCO (MAX 32 MB) ---
+        # Definimos um limite de 32768 blocos (32 MB com blocos de 1 KB) para a simulação,
+        # prevenindo estouros de fuzzing sem restringir testes acadêmicos.
+        # NOTA PARA APRESENTAÇÃO: Se quiser flexibilizar ou desativar este limite durante a apresentação,
+        # basta alterar o valor 32768 abaixo.
+>>>>>>> 713d24edc05f53d66c8a6a2bc48a99475fdd23cb
         if disk_size <= 0 or disk_size > 32768:
             raise InputError(
                 "Quantidade de blocos do disco deve ser entre 1 e 32768."

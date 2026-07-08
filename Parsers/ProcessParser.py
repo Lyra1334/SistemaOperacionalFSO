@@ -79,9 +79,17 @@ class ProcessParser:
                 if page < 0:
                     raise InputError(f"Número de página não pode ser negativo: {page}")
                 
+<<<<<<< HEAD
                 # Limitação teórica de endereçamento virtual de 16 bits (máximo 64 páginas de 1 KB).
                 # Caso haja necessidade de suportar referências a páginas lógicas maiores que 63 na simulação,
                 # a restrição abaixo pode ser comentada ou removida.
+=======
+                # --- LIMITAÇÃO DE ENDEREÇAMENTO VIRTUAL (TEORIA CLASSICA DE 16-BITS) ---
+                # Pelo conceito clássico (Tanenbaum), sob espaço de endereçamento de 16 bits (64 KB)
+                # e frames de 1 KB, o processo pode endereçar no máximo 64 páginas virtuais (índices 0 a 63).
+                # NOTA PARA APRESENTAÇÃO: Se a professora testar strings de referência com índices maiores (ex: 100)
+                # e você quiser desativar essa restrição conceitual de 16 bits na hora, basta comentar ou excluir as duas linhas abaixo.
+>>>>>>> 713d24edc05f53d66c8a6a2bc48a99475fdd23cb
                 if page > 63:
                     raise InputError(f"Número de página excede o limite de endereçamento virtual de 16 bits (máximo 63): {page}")
                 

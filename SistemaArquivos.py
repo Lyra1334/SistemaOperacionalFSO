@@ -1,5 +1,8 @@
-#A classe não vê os processos, esse check tem que ser feito pelo processador principal
-#TODO: definir retornos. por enquanto deixo assim pra gente saber o que tá acontecendo
+# CÓDIGO LEGADO (Monolítico):
+# Esta classe representa o sistema de arquivos original desenvolvido pela equipe.
+# Foi substituída pelo módulo robusto e testado 'Storage/Disk.py' e 'Managers/FileSystemManager.py'.
+# A classe não vê os processos, esse check tem que ser feito pelo processador principal
+# TODO: definir retornos. por enquanto deixo assim pra gente saber o que tá acontecendo
 
 class disco:
 
