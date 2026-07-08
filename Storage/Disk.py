@@ -82,7 +82,6 @@ class Disk:
     @staticmethod
     def _validate_name(filename: str) -> None:
         """
-<<<<<<< HEAD
         Realiza a validação lógica do nome do arquivo simulado.
         
         Restrições aplicadas para garantir a integridade dos parsers e do layout de saída:
@@ -92,18 +91,6 @@ class Disk:
         
         Caso haja necessidade de flexibilizar essas restrições, pode-se inserir um 'return'
         no início desta função para ignorar as validações.
-=======
-        Valida o nome do arquivo.
-        
-        --- NOTA PARA APRESENTAÇÃO ---
-        Se a professora testar o simulador usando arquivos com formatos ou caracteres incomuns
-        (acentos, caracteres especiais exóticos) e você precisar flexibilizar ou desligar essa
-        validação rapidamente na apresentação, basta comentar esta função ou alterar a lógica dela:
-        - Para aceitar qualquer nome: apenas coloque "return" no início do método.
-        - As restrições a espaços (isspace()) evitam quebrar o layout impresso do mapa do disco (que usa separação por espaços).
-        - A restrição a vírgulas (",") evita quebrar o parser CSV de entrada.
-        - Restrições a "/" e "\\" barram injeções conceituais de caminhos lógicos (Directory Traversal).
->>>>>>> 713d24edc05f53d66c8a6a2bc48a99475fdd23cb
         """
         if (
             not filename
