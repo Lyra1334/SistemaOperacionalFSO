@@ -44,7 +44,14 @@ class ProcessParser:
             arrival_time = parse_int(parts[0], "tempo de inicialização")
             priority = parse_int(parts[1], "prioridade")
             cpu_time = parse_int(parts[2], "tempo de processador")
-            working_set = min(parse_int(parts[3], "working set"), Config.USER_MEMORY_FRAMES) if priority != 0 else min(parse_int(parts[3], "working set"), Config.REALTIME_MEMORY_FRAMES)
+            requested_ws = parse_int(parts[3], "working set")
+            limit = Config.USER_MEMORY_FRAMES if priority != 0 else Config.REALTIME_MEMORY_FRAMES
+            if requested_ws > limit:
+                raise InputError(
+                    f"O processo {pid} solicita um working set ({requested_ws} frames) "
+                    f"que excede a partição de memória disponível ({limit} frames)."
+                )
+            working_set = requested_ws
 
             printer = parse_01(parts[4], "requisição de impressora")
             scanner = parse_01(parts[5], "requisição de scanner")

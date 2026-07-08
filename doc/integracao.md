@@ -54,17 +54,17 @@ Como gerenciador de memória principal,
 Eu quero aplicar a partição física rígida de frames e o teto máximo de working set na admissão,
 Para garantir o isolamento físico de memória e que processos operem dentro de suas cotas locais.
 
-#### Cenário 1: Redução silenciosa de working set na admissão de usuário
+#### Cenário 1: Rejeição de working set excedente na admissão de usuário
 * **Dado** que um processo de usuário foi lido solicitando um conjunto de trabalho (`working set`) de 15 frames;
 * **Quando** o parser realiza o processamento dos dados do processo;
-* **Então** o parser deve limitar silenciosamente o working set a 12 frames (tamanho máximo físico reservado para usuários, `Config.USER_MEMORY_FRAMES`);
-* **E** permitir que o processo seja admitido e execute normalmente sob essa cota, sem abortar a simulação.
+* **Então** o parser deve rejeitar a inicialização do processo levantando um `InputError`;
+* **E** abortar a simulação com erro, sem admitir nenhum processo para execução.
 
-#### Cenário 2: Redução silenciosa de working set na admissão de tempo real
+#### Cenário 2: Rejeição de working set excedente na admissão de tempo real
 * **Dado** que um processo de tempo real solicita um conjunto de trabalho (`working set`) de 10 frames;
 * **Quando** o parser realiza o processamento dos dados do processo;
-* **Então** o parser deve limitar silenciosamente o working set a 8 frames (tamanho máximo físico reservado para tempo real, `Config.REALTIME_MEMORY_FRAMES`);
-* **E** permitir que o processo execute sob essa cota.
+* **Então** o parser deve rejeitar a inicialização do processo levantando um `InputError`;
+* **E** abortar a simulação com erro na inicialização.
 
 ---
 

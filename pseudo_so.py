@@ -117,6 +117,13 @@ class ProcessParser:
             if priority < 0 or priority > 3:
                 raise InputError(f"Prioridade inválida na linha {pid + 1}: use 0, 1, 2 ou 3.")
 
+            limit = 12 if priority != 0 else 8
+            if working_set > limit:
+                raise InputError(
+                    f"O processo {pid} solicita um working set ({working_set} frames) "
+                    f"que excede a partição de memória disponível ({limit} frames)."
+                )
+
             references = [parse_int(x, 'página') for x in split_csv(string_lines[pid])]
             processes.append(Process(pid, arrival, priority, cpu_time, working_set,
                                      printer, scanner, modem, sata, references))

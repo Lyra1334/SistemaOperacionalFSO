@@ -29,11 +29,9 @@ class TestSOAdversarialScenarios(unittest.TestCase):
         output = StringIO()
         with patch('sys.stdout', new=output):
             exit_code = Main.main(argv)
-        self.assertEqual(exit_code, 0)
+        self.assertEqual(exit_code, 1)
         text = output.getvalue()
-        self.assertIn("P0 = 8 faltas de páginas", text)
-        self.assertIn("P1 = 13 faltas de páginas", text)
-        self.assertIn("O processo 0 criou o arquivo A", text)
+        self.assertIn("O processo 0 solicita um working set (9 frames) que excede a partição de memória disponível (8 frames).", text)
 
     def test_cenario_acesso_memoria_proibido(self) -> None:
         argv = [

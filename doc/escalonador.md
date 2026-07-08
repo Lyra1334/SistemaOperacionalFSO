@@ -28,12 +28,12 @@ Especificação de comportamento do Escalonador de CPU.
 * **Então** o cabeçalho do despachante `dispatcher =>` deve ser impresso obrigatoriamente (evitando omitir logs)
 * **Implementação**: [Despacho em Scheduler.py:L143-L148](file:///C:/Users/Eduardo/Documents/GitHub/SistemaOperacionalFSO-V2/Scheduling/Scheduler.py#L143-L148) e [reset do last_pid em Scheduler.py:L171](file:///C:/Users/Eduardo/Documents/GitHub/SistemaOperacionalFSO-V2/Scheduling/Scheduler.py#L171)
 
-### - [x] Cenário: Redução Silenciosa de Working Set Excedente na Admissão
+### - [x] Cenário: Rejeição Estrita de Working Set Excedente no Boot
 * **Dado** que um processo solicita no arquivo de entrada um working set maior que a partição física disponível (12 frames para usuário, 8 para tempo real)
 * **Quando** o parser de processos realiza a carga do arquivo de entrada
-* **Então** o parser restringe silenciosamente o working set do processo ao limite físico da partição correspondente (8 ou 12)
-* **E** o processo executa normalmente sob essa cota limitada
-* **Implementação**: [Redução de working set em ProcessParser.py:L47](file:///C:/Users/Eduardo/Documents/GitHub/SistemaOperacionalFSO-V2/Parsers/ProcessParser.py#L47)
+* **Então** o simulador aborta imediatamente e levanta um `InputError`
+* **E** a simulação não é executada, retornando exit code 1
+* **Implementação**: [Rejeição estrita de working set em ProcessParser.py:L46-L53](file:///C:/Users/Eduardo/Documents/GitHub/SistemaOperacionalFSO-V2/Parsers/ProcessParser.py#L46-L53)
 
 ### - [x] Cenário: Rejeição de Processo por Estouro de Memória em Instanciação Direta
 * **Dado** que um processo é instanciado manualmente fora do parser com working set maior que a partição física
