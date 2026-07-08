@@ -81,11 +81,27 @@ class Disk:
 
     @staticmethod
     def _validate_name(filename: str) -> None:
-
+        """
+        Valida o nome do arquivo.
+        
+        --- NOTA PARA APRESENTAÇÃO ---
+        Se a professora testar o simulador usando arquivos com formatos ou caracteres incomuns
+        (acentos, caracteres especiais exóticos) e você precisar flexibilizar ou desligar essa
+        validação rapidamente na apresentação, basta comentar esta função ou alterar a lógica dela:
+        - Para aceitar qualquer nome: apenas coloque "return" no início do método.
+        - As restrições a espaços (isspace()) evitam quebrar o layout impresso do mapa do disco (que usa separação por espaços).
+        - A restrição a vírgulas (",") evita quebrar o parser CSV de entrada.
+        - Restrições a "/" e "\\" barram injeções conceituais de caminhos lógicos (Directory Traversal).
+        """
         if (
             not filename
             or filename == Config.FREE_BLOCK
             or "," in filename
+            or any(c.isspace() for c in filename)
+            or "/" in filename
+            or "\\" in filename
+            or "\x00" in filename
+            or any(not (c.isalnum() or c in ".-_") for c in filename)
         ):
             raise FileSystemError(
                 f"Nome de arquivo inválido: {filename}"
@@ -98,7 +114,14 @@ class Disk:
         length: int
     ) -> Tuple[bool, str]:
 
-        self._validate_name(filename)
+        try:
+            self._validate_name(filename)
+        except FileSystemError as exc:
+            return (
+                False,
+                f"O processo {pid} não pode criar o arquivo "
+                f"{filename} (nome inválido)."
+            )
 
         if length <= 0:
             return (
@@ -142,6 +165,15 @@ class Disk:
         filename: str,
         can_delete_any: bool
     ) -> Tuple[bool, str]:
+
+        try:
+            self._validate_name(filename)
+        except FileSystemError as exc:
+            return (
+                False,
+                f"O processo {pid} não pode deletar o arquivo "
+                f"{filename} (nome inválido)."
+            )
 
         if filename not in self.disk:
             return (

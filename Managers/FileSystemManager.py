@@ -61,6 +61,9 @@ class FileSystemManager:
         if process is None:
             return False, f"O processo {operation.pid} não existe."
 
+        if process.is_rejected:
+            return False, f"O processo {operation.pid} não pode realizar operações de arquivos porque foi rejeitado."
+
         if self.compatibility_mode:
             if (
                 operation.pid == 1

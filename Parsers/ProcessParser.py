@@ -20,6 +20,11 @@ class ProcessParser:
         process_lines = read_non_empty_lines(processes_path)
         string_lines = read_non_empty_lines(strings_path)
 
+        if len(process_lines) > 1000:
+            raise InputError(
+                f"Quantidade de processos ({len(process_lines)}) excede o limite do sistema (máximo 1000)."
+            )
+
         if len(process_lines) != len(string_lines):
             raise InputError(
                 f"Quantidade de processos ({len(process_lines)}) diferente "
@@ -48,9 +53,13 @@ class ProcessParser:
 
             if arrival_time < 0:
                 raise InputError("Tempo de inicialização não pode ser negativo.")
+            if arrival_time > 1000000:
+                raise InputError("Tempo de inicialização muito grande.")
 
-            if cpu_time < 0:
-                raise InputError("Tempo de processador não pode ser negativo.")
+            if cpu_time <= 0:
+                raise InputError("Tempo de processador deve ser maior que zero.")
+            if cpu_time > 1000000:
+                raise InputError("Tempo de processador muito grande.")
 
             if working_set <= 0:
                 raise InputError("Working set deve ser maior que zero.")
@@ -64,10 +73,21 @@ class ProcessParser:
                 modem = 0
                 sata = 0
 
-            references = [
-                parse_int(page, "página")
-                for page in split_csv(string_lines[pid])
-            ]
+            references = []
+            for page_str in split_csv(string_lines[pid]):
+                page = parse_int(page_str, "página")
+                if page < 0:
+                    raise InputError(f"Número de página não pode ser negativo: {page}")
+                
+                # --- LIMITAÇÃO DE ENDEREÇAMENTO VIRTUAL (TEORIA CLASSICA DE 16-BITS) ---
+                # Pelo conceito clássico (Tanenbaum), sob espaço de endereçamento de 16 bits (64 KB)
+                # e frames de 1 KB, o processo pode endereçar no máximo 64 páginas virtuais (índices 0 a 63).
+                # NOTA PARA APRESENTAÇÃO: Se a professora testar strings de referência com índices maiores (ex: 100)
+                # e você quiser desativar essa restrição conceitual de 16 bits na hora, basta comentar ou excluir as duas linhas abaixo.
+                if page > 63:
+                    raise InputError(f"Número de página excede o limite de endereçamento virtual de 16 bits (máximo 63): {page}")
+                
+                references.append(page)
 
             processes.append(
                 Process(

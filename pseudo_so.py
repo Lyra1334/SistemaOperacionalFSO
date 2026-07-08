@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+"""
+CÓDIGO LEGADO (Monolítico):
+Este arquivo contém a implementação monolítica original desenvolvida pela equipe.
+Os arquivos de testes que originalmente ficavam em 'casosDeTeste/' foram unificados e movidos
+para a pasta 'testes/casosDeTeste/'.
+A execução atualizada deste monolítico foi preservada e atualizada em main() com as novas rotas.
+"""
 from __future__ import annotations
 
 import sys
@@ -492,9 +499,9 @@ def main(argv: List[str]) -> int:
     if len(argv) == 4:
         processes_path, files_path, strings_path = argv[1], argv[2], argv[3]
     else:
-        processes_path = "casosDeTeste/processes.txt"
-        files_path = "casosDeTeste/files.txt"
-        strings_path = "casosDeTeste/string.txt"
+        processes_path = "testes/casosDeTeste/processes.txt"
+        files_path = "testes/casosDeTeste/files.txt"
+        strings_path = "testes/casosDeTeste/string.txt"
 
     try:
         processes = ProcessParser.load(processes_path, strings_path)

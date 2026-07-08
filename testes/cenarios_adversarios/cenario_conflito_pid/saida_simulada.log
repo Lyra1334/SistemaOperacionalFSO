@@ -1,0 +1,97 @@
+dispatcher =>
+ PID: 0
+ frames: 4
+ priority: 0
+ time: 2
+ printers: 0
+ scanners: 0
+ modems: 0
+ drives: 0
+process 0 =>
+P0 STARTED
+P0 instruction 1
+P0 instruction 2
+P0 return SIGINT
+dispatcher =>
+ PID: 1
+ frames: 4
+ priority: 1
+ time: 3
+ printers: 0
+ scanners: 0
+ modems: 0
+ drives: 0
+process 1 =>
+P1 STARTED
+P1 instruction 1
+dispatcher =>
+ PID: 2
+ frames: 4
+ priority: 2
+ time: 2
+ printers: 0
+ scanners: 0
+ modems: 0
+ drives: 0
+process 2 =>
+P2 STARTED
+P2 instruction 1
+dispatcher =>
+ PID: 1
+ frames: 4
+ priority: 2
+ time: 3
+ printers: 0
+ scanners: 0
+ modems: 0
+ drives: 0
+process 1 =>
+P1 STARTED
+P1 instruction 2
+dispatcher =>
+ PID: 2
+ frames: 4
+ priority: 3
+ time: 2
+ printers: 0
+ scanners: 0
+ modems: 0
+ drives: 0
+process 2 =>
+P2 STARTED
+P2 instruction 2
+P2 return SIGINT
+dispatcher =>
+ PID: 1
+ frames: 4
+ priority: 3
+ time: 3
+ printers: 0
+ scanners: 0
+ modems: 0
+ drives: 0
+process 1 =>
+P1 STARTED
+P1 instruction 3
+P1 return SIGINT
+Sistema de arquivos =>
+OperaÃ§Ã£o 1 => Sucesso
+O processo 1 criou o arquivo A (blocos 5, 6, 7, 8 e 9).
+OperaÃ§Ã£o 2 => Falha
+O processo 2 nÃ£o pode deletar o arquivo A porque nÃ£o Ã© o dono.
+OperaÃ§Ã£o 3 => Falha
+O processo 1 nÃ£o pode deletar o arquivo Y porque nÃ£o foi criado por ele.
+OperaÃ§Ã£o 4 => Sucesso
+O processo 0 deletou o arquivo Y.
+OperaÃ§Ã£o 5 => Falha
+O processo 99 nÃ£o existe.
+OperaÃ§Ã£o 6 => Falha
+O processo -1 nÃ£o existe.
+OperaÃ§Ã£o 7 => Falha
+O processo 1 nÃ£o pode criar o arquivo A (arquivo jÃ¡ existe).
+Mapa de ocupaÃ§Ã£o do disco:
+X X 0 0 0 A A A A A
+NÃºmero de Faltas de PÃ¡ginas por processo:
+P0 = 2 faltas de pÃ¡ginas
+P1 = 3 faltas de pÃ¡ginas
+P2 = 3 faltas de pÃ¡ginas

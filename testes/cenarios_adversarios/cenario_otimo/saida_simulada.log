@@ -1,0 +1,119 @@
+dispatcher =>
+ PID: 0
+ frames: 4
+ priority: 0
+ time: 2
+ printers: 0
+ scanners: 0
+ modems: 0
+ drives: 0
+process 0 =>
+P0 STARTED
+P0 instruction 1
+P0 instruction 2
+P0 return SIGINT
+dispatcher =>
+ PID: 1
+ frames: 4
+ priority: 1
+ time: 3
+ printers: 1
+ scanners: 0
+ modems: 0
+ drives: 1
+process 1 =>
+P1 STARTED
+P1 instruction 1
+dispatcher =>
+ PID: 2
+ frames: 4
+ priority: 2
+ time: 2
+ printers: 0
+ scanners: 1
+ modems: 1
+ drives: 0
+process 2 =>
+P2 STARTED
+P2 instruction 1
+dispatcher =>
+ PID: 1
+ frames: 4
+ priority: 2
+ time: 3
+ printers: 1
+ scanners: 0
+ modems: 0
+ drives: 1
+process 1 =>
+P1 STARTED
+P1 instruction 2
+dispatcher =>
+ PID: 3
+ frames: 4
+ priority: 2
+ time: 2
+ printers: 1
+ scanners: 0
+ modems: 0
+ drives: 1
+process 3 =>
+P3 STARTED
+P3 instruction 1
+dispatcher =>
+ PID: 2
+ frames: 4
+ priority: 2
+ time: 2
+ printers: 0
+ scanners: 1
+ modems: 1
+ drives: 0
+process 2 =>
+P2 STARTED
+P2 instruction 2
+P2 return SIGINT
+dispatcher =>
+ PID: 1
+ frames: 4
+ priority: 3
+ time: 3
+ printers: 1
+ scanners: 0
+ modems: 0
+ drives: 1
+process 1 =>
+P1 STARTED
+P1 instruction 3
+P1 return SIGINT
+dispatcher =>
+ PID: 3
+ frames: 4
+ priority: 3
+ time: 2
+ printers: 1
+ scanners: 0
+ modems: 0
+ drives: 1
+process 3 =>
+P3 STARTED
+P3 instruction 2
+P3 return SIGINT
+Sistema de arquivos =>
+OperaÃ§Ã£o 1 => Sucesso
+O processo 0 deletou o arquivo X.
+OperaÃ§Ã£o 2 => Sucesso
+O processo 1 criou o arquivo A (blocos 5, 6, 7 e 8).
+OperaÃ§Ã£o 3 => Sucesso
+O processo 2 criou o arquivo B (blocos 9, 10 e 11).
+OperaÃ§Ã£o 4 => Sucesso
+O processo 1 deletou o arquivo A.
+OperaÃ§Ã£o 5 => Sucesso
+O processo 3 criou o arquivo C (blocos 12, 13, 14, 15 e 16).
+Mapa de ocupaÃ§Ã£o do disco:
+0 0 Y Y Y 0 0 0 0 B B B C C C C C
+NÃºmero de Faltas de PÃ¡ginas por processo:
+P0 = 2 faltas de pÃ¡ginas
+P1 = 7 faltas de pÃ¡ginas
+P2 = 3 faltas de pÃ¡ginas
+P3 = 1 falta de pÃ¡gina
