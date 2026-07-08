@@ -143,8 +143,10 @@ class Scheduler:
     def _execute(self, process: Process) -> None:
 
         if self.last_pid != process.pid:
+            if self.clock > 0:
+                print()
             self.dispatcher.show_process_info(process)
-
+            print()
             print(f"process {process.pid} =>")
             print(f"P{process.pid} STARTED")
 

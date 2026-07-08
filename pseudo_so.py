@@ -280,7 +280,10 @@ class Scheduler:
         return None
 
     def _execute(self, process: Process) -> None:
+        if self.clock > 0:
+            print()
         self._dispatch_print(process)
+        print()
         print(f"process {process.pid} =>")
         print(f"P{process.pid} STARTED")
         self.memory.simulate_references(process)
@@ -462,7 +465,9 @@ class FileSystemRunner:
         self.processes = {p.pid: p for p in processes}
 
     def run(self) -> None:
+        print()
         print('Sistema de arquivos =>')
+        print()
         for index, operation in enumerate(self.operations, start=1):
             ok, message = self._execute_operation(operation)
             print(f"Operação {index} => {'Sucesso' if ok else 'Falha'}")

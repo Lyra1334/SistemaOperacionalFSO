@@ -39,7 +39,9 @@ class FileSystemManager:
         }
 
     def run(self) -> None:
+        print()
         print(Config.FILESYSTEM_LABEL)
+        print()
 
         for index, operation in enumerate(self.operations, start=1):
             success, message = self._execute_operation(operation)
