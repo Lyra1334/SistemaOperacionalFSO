@@ -13,7 +13,7 @@ Responsável por:
 
 from typing import Dict, List, Tuple
 
-import Config
+from Core import Config
 
 from Models.OperacaoArquivo import OperacaoArquivo
 from Models.Processo import Processo

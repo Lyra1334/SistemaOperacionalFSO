@@ -12,9 +12,9 @@ Responsável por:
 
 from typing import Dict
 
-import Config
+from Core import Config
 
-from Erros import ErroGerenciadorRecurso
+from Core.Erros import ErroGerenciadorRecurso
 from Models.Processo import Processo
 
 

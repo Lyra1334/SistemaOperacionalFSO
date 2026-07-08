@@ -13,10 +13,10 @@ Responsabilidades:
 
 from typing import Dict, List, Optional, Tuple
 
-import Config
+from Core import Config
 
-from Erros import ErroSistemaArquivos
-from Utils import formatarBlocos
+from Core.Erros import ErroSistemaArquivos
+from Core.Utils import formatarBlocos
 
 
 class Disco:

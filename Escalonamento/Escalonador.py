@@ -15,7 +15,7 @@ Responsável por:
 from collections import deque
 from typing import Deque, Dict, List, Optional
 
-import Config
+from Core import Config
 
 from Interface.Despachante import Despachante
 from Gerenciadores.GerenciadorMemoria import GerenciadorMemoria
@@ -76,6 +76,13 @@ class Escalonador:
         ):
             processo = self.processos[self.indiceProximaChegada]
             self.indiceProximaChegada += 1
+
+            if processo.rejeitado:
+                print(
+                    f"dispatcher => Processo {processo.pid} rejeitado: {processo.motivoRejeicao}"
+                )
+                self.finalizados.append(processo)
+                continue
 
             if not self.memoria.validarProcesso(processo):
                 print(

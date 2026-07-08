@@ -7,7 +7,7 @@ from Gerenciadores.GerenciadorMemoria import GerenciadorMemoria
 from Armazenamento.Disco import Disco
 from Models.Processo import Processo
 from Models.OperacaoArquivo import OperacaoArquivo
-from Erros import ErroEntrada, ErroSistemaArquivos, ErroGerenciadorRecurso, ErroGerenciadorMemoria
+from Core.Erros import ErroEntrada, ErroSistemaArquivos, ErroGerenciadorRecurso, ErroGerenciadorMemoria
 
 class TestFuzzingAdversarial(unittest.TestCase):
 
@@ -21,8 +21,8 @@ class TestFuzzingAdversarial(unittest.TestCase):
                 ["0, 0, 1, 2, 0, 0, 0, 0"],
                 ["1, -1, 2"]
             ]
-            with self.assertRaises(ErroEntrada):
-                ProcessoParser.carregar("p", "s")
+            processos = ProcessoParser.carregar("p", "s")
+            self.assertTrue(processos[0].rejeitado)
 
         # Página > 63 (ex: 64)
         with patch('Parsers.ProcessoParser.lerLinhasNaoVazias') as mock_read:
@@ -30,8 +30,8 @@ class TestFuzzingAdversarial(unittest.TestCase):
                 ["0, 0, 1, 2, 0, 0, 0, 0"],
                 ["1, 64, 2"]
             ]
-            with self.assertRaises(ErroEntrada):
-                ProcessoParser.carregar("p", "s")
+            processos = ProcessoParser.carregar("p", "s")
+            self.assertTrue(processos[0].rejeitado)
 
     def test_filenames_with_spaces_and_control_chars(self) -> None:
         """
@@ -91,16 +91,16 @@ class TestFuzzingAdversarial(unittest.TestCase):
                 ["0, 1, -2, 4, 0, 0, 0, 0"], # cpu_time negativo (-2)
                 ["1, 2"]
             ]
-            with self.assertRaises(ErroEntrada):
-                ProcessoParser.carregar("p", "s")
+            processos = ProcessoParser.carregar("p", "s")
+            self.assertTrue(processos[0].rejeitado)
 
         with patch('Parsers.ProcessoParser.lerLinhasNaoVazias') as mock_read:
             mock_read.side_effect = [
                 ["0, 1, 3, -1, 0, 0, 0, 0"], # working_set negativo (-1)
                 ["1, 2"]
             ]
-            with self.assertRaises(ErroEntrada):
-                ProcessoParser.carregar("p", "s")
+            processos = ProcessoParser.carregar("p", "s")
+            self.assertTrue(processos[0].rejeitado)
 
     def test_extremely_large_numbers_overflow(self) -> None:
         """
@@ -113,8 +113,8 @@ class TestFuzzingAdversarial(unittest.TestCase):
                 [f"0, 1, {10**18}, 4, 0, 0, 0, 0"],
                 ["1, 2"]
             ]
-            with self.assertRaises(ErroEntrada):
-                ProcessoParser.carregar("p", "s")
+            processos = ProcessoParser.carregar("p", "s")
+            self.assertTrue(processos[0].rejeitado)
 
         with patch('Parsers.SistemaArquivosParser.lerLinhasNaoVazias') as mock_read:
             # Tamanho do disco gigantesco
@@ -130,7 +130,7 @@ class TestFuzzingAdversarial(unittest.TestCase):
         Garante que apenas as representações equivalentes a 0 ou 1 sejam aceitas,
         enquanto outros valores inteiros (como 2, 10 ou negativos) sejam estritamente rejeitados.
         """
-        from Utils import converterBooleano
+        from Core.Utils import converterBooleano
         
         # Válidos
         self.assertEqual(converterBooleano("1"), 1)

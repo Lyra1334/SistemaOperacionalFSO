@@ -1,6 +1,6 @@
 import unittest
 from Armazenamento.Disco import Disco
-from Erros import ErroSistemaArquivos
+from Core.Erros import ErroSistemaArquivos
 
 class TestDisk(unittest.TestCase):
 

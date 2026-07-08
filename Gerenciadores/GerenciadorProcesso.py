@@ -13,9 +13,9 @@ Responsável por:
 
 from typing import Dict, List, Optional
 
-import Config
+from Core import Config
 
-from Erros import ErroEscalonador
+from Core.Erros import ErroEscalonador
 from Models.Processo import Processo
 
 

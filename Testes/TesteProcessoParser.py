@@ -1,8 +1,8 @@
 import unittest
 from unittest.mock import patch
 from Parsers.ProcessoParser import ProcessoParser
-from Erros import ErroEntrada
-import Config
+from Core.Erros import ErroEntrada
+from Core import Config
 
 class TestProcessParser(unittest.TestCase):
 
@@ -56,26 +56,28 @@ class TestProcessParser(unittest.TestCase):
     @patch('Parsers.ProcessoParser.lerLinhasNaoVazias')
     def test_load_invalid_column_count_error(self, mock_read) -> None:
         """
-        Garante que lança erro se faltarem colunas de parâmetros de processo.
+        Garante que marca o processo como rejeitado se faltarem colunas de parâmetros de processo.
         """
         mock_read.side_effect = [
             ["2, 0, 3, 4"], # apenas 4 colunas em vez de 8
             ["1,2,3"]
         ]
-        with self.assertRaises(ErroEntrada):
-            ProcessoParser.carregar("p", "s")
+        processos = ProcessoParser.carregar("p", "s")
+        self.assertEqual(len(processos), 1)
+        self.assertTrue(processos[0].rejeitado)
 
     @patch('Parsers.ProcessoParser.lerLinhasNaoVazias')
     def test_load_invalid_types_error(self, mock_read) -> None:
         """
-        Garante que lança erro se houver valores não numéricos.
+        Garante que marca o processo como rejeitado se houver valores não numéricos.
         """
         mock_read.side_effect = [
             ["abc, 0, 3, 4, 0, 0, 0, 0"],
             ["1,2,3"]
         ]
-        with self.assertRaises(ErroEntrada):
-            ProcessoParser.carregar("p", "s")
+        processos = ProcessoParser.carregar("p", "s")
+        self.assertEqual(len(processos), 1)
+        self.assertTrue(processos[0].rejeitado)
 
 if __name__ == '__main__':
     unittest.main()

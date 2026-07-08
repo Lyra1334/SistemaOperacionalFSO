@@ -1,7 +1,7 @@
 import unittest
 from Gerenciadores.GerenciadorMemoria import GerenciadorMemoria
 from Models.Processo import Processo
-import Config
+from Core import Config
 
 class TestMemoryManager(unittest.TestCase):
 

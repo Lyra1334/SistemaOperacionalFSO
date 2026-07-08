@@ -8,16 +8,16 @@ Ponto de entrada do pseudo-SO.
 import sys
 from typing import List
 
-import Config
+from Core import Config
 
-from Erros import ErroEntrada
+from Core.Erros import ErroEntrada
 from Parsers.ProcessoParser import ProcessoParser
 from Parsers.SistemaArquivosParser import SistemaArquivosParser
 from Gerenciadores.GerenciadorMemoria import GerenciadorMemoria
 from Gerenciadores.GerenciadorRecurso import GerenciadorRecurso
 from Gerenciadores.GerenciadorSistemaArquivos import GerenciadorSistemaArquivos
 from Escalonamento.Escalonador import Escalonador
-from Utils import formatarFaltasPagina
+from Core.Utils import formatarFaltasPagina
 
 
 def main(argv: List[str]) -> int:

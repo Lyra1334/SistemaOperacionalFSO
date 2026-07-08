@@ -4,7 +4,7 @@ Despachante.py
 Responsável por exibir as informações do processo antes da execução.
 """
 
-import Config
+from Core import Config
 
 from Models.Processo import Processo
 

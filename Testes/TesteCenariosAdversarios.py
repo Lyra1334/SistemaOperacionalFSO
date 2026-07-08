@@ -29,9 +29,9 @@ class TestSOAdversarialScenarios(unittest.TestCase):
         output = StringIO()
         with patch('sys.stdout', new=output):
             exit_code = Main.main(argv)
-        self.assertEqual(exit_code, 1)
+        self.assertEqual(exit_code, 0)
         text = output.getvalue()
-        self.assertIn("O processo 0 solicita um working set (9 frames) que excede a partição de memória disponível (8 frames).", text)
+        self.assertIn("dispatcher => Processo 0 rejeitado: working set maior que a área de memória permitida.", text)
 
     def test_cenario_acesso_memoria_proibido(self) -> None:
         argv = [
@@ -43,8 +43,8 @@ class TestSOAdversarialScenarios(unittest.TestCase):
         output = StringIO()
         with patch('sys.stdout', new=output):
             exit_code = Main.main(argv)
-        self.assertEqual(exit_code, 1)
-        self.assertIn("ERRO DE ENTRADA: Número de página excede o limite de endereçamento virtual de 16 bits (máximo 63): 64", output.getvalue())
+        self.assertEqual(exit_code, 0)
+        self.assertIn("dispatcher => Processo 0 rejeitado: acesso de memória fora dos limites (Segmentation Fault).", output.getvalue())
 
     def test_cenario_recursos_indisponiveis(self) -> None:
         argv = [
@@ -56,8 +56,8 @@ class TestSOAdversarialScenarios(unittest.TestCase):
         output = StringIO()
         with patch('sys.stdout', new=output):
             exit_code = Main.main(argv)
-        self.assertEqual(exit_code, 1)
-        self.assertIn("ERRO DE ENTRADA: requisição de impressora deve ser estritamente 0 ou 1: '3'", output.getvalue())
+        self.assertEqual(exit_code, 0)
+        self.assertIn("dispatcher => Processo 0 rejeitado: requer mais recursos do que o possúido pelo sistema.", output.getvalue())
 
     def test_cenario_conflito_pid(self) -> None:
         argv = [

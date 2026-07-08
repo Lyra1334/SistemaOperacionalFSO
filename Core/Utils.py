@@ -6,7 +6,7 @@ Funções auxiliares usadas em várias partes do pseudo-SO.
 
 from typing import List
 
-from Erros import ErroEntrada
+from Core.Erros import ErroEntrada
 
 
 def dividirCsv(linha: str) -> List[str]:

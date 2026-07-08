@@ -11,7 +11,7 @@ Responsável por:
 - Contabilizar faltas de página.
 """
 
-import Config
+from Core import Config
 
 from Models.Processo import Processo
 

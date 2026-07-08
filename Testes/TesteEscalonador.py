@@ -5,7 +5,7 @@ from Escalonamento.Escalonador import Escalonador
 from Models.Processo import Processo
 from Gerenciadores.GerenciadorMemoria import GerenciadorMemoria
 from Gerenciadores.GerenciadorRecurso import GerenciadorRecurso
-import Config
+from Core import Config
 
 class TestScheduler(unittest.TestCase):
 

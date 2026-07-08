@@ -1,7 +1,7 @@
 import unittest
 from Gerenciadores.GerenciadorRecurso import GerenciadorRecurso
 from Models.Processo import Processo
-import Config
+from Core import Config
 
 class TestResourceManager(unittest.TestCase):
 

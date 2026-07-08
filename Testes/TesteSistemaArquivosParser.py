@@ -1,8 +1,8 @@
 import unittest
 from unittest.mock import patch
 from Parsers.SistemaArquivosParser import SistemaArquivosParser
-from Erros import ErroEntrada
-import Config
+from Core.Erros import ErroEntrada
+from Core import Config
 
 class TestFileSystemParser(unittest.TestCase):
 

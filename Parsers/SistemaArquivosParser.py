@@ -7,12 +7,12 @@ criando o disco e a lista de operações do sistema de arquivos.
 
 from typing import List, Tuple
 
-import Config
+from Core import Config
 
-from Erros import ErroEntrada
+from Core.Erros import ErroEntrada
 from Models.OperacaoArquivo import OperacaoArquivo
 from Armazenamento.Disco import Disco
-from Utils import (
+from Core.Utils import (
     converterInteiro,
     lerLinhasNaoVazias,
     dividirCsv,
