@@ -10,52 +10,52 @@ from typing import List
 
 import Config
 
-from Errors import InputError
-from Parsers.ProcessParser import ProcessParser
-from Parsers.FileSystemParser import FileSystemParser
-from Managers.MemoryManager import MemoryManager
-from Managers.ResourceManager import ResourceManager
-from Managers.FileSystemManager import FileSystemManager
-from Scheduling.Scheduler import Scheduler
-from Utils import format_page_faults
+from Erros import ErroEntrada
+from Parsers.ProcessoParser import ProcessoParser
+from Parsers.SistemaArquivosParser import SistemaArquivosParser
+from Gerenciadores.GerenciadorMemoria import GerenciadorMemoria
+from Gerenciadores.GerenciadorRecurso import GerenciadorRecurso
+from Gerenciadores.GerenciadorSistemaArquivos import GerenciadorSistemaArquivos
+from Escalonamento.Escalonador import Escalonador
+from Utils import formatarFaltasPagina
 
 
 def main(argv: List[str]) -> int:
     if len(argv) == 4:
-        processes_path = argv[1]
-        files_path = argv[2]
-        strings_path = argv[3]
+        caminhoProcessos = argv[1]
+        caminhoArquivos = argv[2]
+        caminhoStrings = argv[3]
     else:
-        processes_path = Config.DEFAULT_PROCESSES_FILE
-        files_path = Config.DEFAULT_FILESYSTEM_FILE
-        strings_path = Config.DEFAULT_REFERENCES_FILE
+        caminhoProcessos = Config.ARQUIVO_PROCESSOS_PADRAO
+        caminhoArquivos = Config.ARQUIVO_SISTEMA_ARQUIVOS_PADRAO
+        caminhoStrings = Config.ARQUIVO_REFERENCIAS_PADRAO
 
     try:
-        processes = ProcessParser.load(processes_path, strings_path)
-        disk, operations = FileSystemParser.load(files_path)
+        processos = ProcessoParser.carregar(caminhoProcessos, caminhoStrings)
+        disco, operacoes = SistemaArquivosParser.carregar(caminhoArquivos)
 
-        memory = MemoryManager()
-        resources = ResourceManager()
+        memoria = GerenciadorMemoria()
+        recursos = GerenciadorRecurso()
 
-        scheduler = Scheduler(processes, memory, resources)
-        scheduler.run()
+        escalonador = Escalonador(processos, memoria, recursos)
+        escalonador.executar()
 
-        file_system = FileSystemManager(
-            disk=disk,
-            operations=operations,
-            processes=processes,
-            compatibility_mode=Config.ENABLE_PDF_COMPATIBILITY
+        sistemaArquivos = GerenciadorSistemaArquivos(
+            disco=disco,
+            operacoes=operacoes,
+            processos=processos,
+            modoCompatibilidade=Config.HABILITAR_COMPATIBILIDADE_PDF
         )
-        file_system.run()
+        sistemaArquivos.executar()
 
-        print(Config.PAGEFAULT_LABEL)
+        print(Config.ROTULO_FALTAS_PAGINA)
 
-        for process in sorted(processes, key=lambda p: p.pid):
-            print(f"P{process.pid} = {format_page_faults(process.page_faults)}")
+        for processo in sorted(processos, key=lambda p: p.pid):
+            print(f"P{processo.pid} = {formatarFaltasPagina(processo.faltasPagina)}")
 
         return 0
 
-    except InputError as exc:
+    except ErroEntrada as exc:
         print(f"ERRO DE ENTRADA: {exc}")
         return 1
 

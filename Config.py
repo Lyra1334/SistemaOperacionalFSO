@@ -1,35 +1,35 @@
 # Memória
-TOTAL_MEMORY_FRAMES = 20
-REALTIME_MEMORY_FRAMES = 8
-USER_MEMORY_FRAMES = 12
-FRAME_SIZE_KB = 1
+TOTAL_QUADROS_MEMORIA = 20
+QUADROS_MEMORIA_TEMPO_REAL = 8
+QUADROS_MEMORIA_USUARIO = 12
+TAMANHO_QUADRO_KB = 1
 
 # Escalonamento
-REALTIME_PRIORITY = 0
-MAX_USER_PRIORITY = 3
-USER_QUANTUM = 1          # ms
-MAX_PROCESSES = 1000
+PRIORIDADE_TEMPO_REAL = 0
+MAX_PRIORIDADE_USUARIO = 3
+QUANTUM_USUARIO = 1          # ms
+MAX_PROCESSOS = 1000
 
 # Recursos de E/S
 TOTAL_SCANNERS = 1
-TOTAL_PRINTERS = 2
+TOTAL_IMPRESSORAS = 2
 TOTAL_MODEMS = 1
-TOTAL_SATA_DRIVES = 2
+TOTAL_DRIVES_SATA = 2
 
 # Sistema de Arquivos
-FREE_BLOCK = "0"
-CREATE_OPERATION = 0
-DELETE_OPERATION = 1
+BLOCO_LIVRE = "0"
+OPERACAO_CRIAR = 0
+OPERACAO_DELETAR = 1
 
 # Diretórios padrão
-DEFAULT_PROCESSES_FILE = "testes/casosDeTeste/processes.txt"
-DEFAULT_FILESYSTEM_FILE = "testes/casosDeTeste/files.txt"
-DEFAULT_REFERENCES_FILE = "testes/casosDeTeste/string.txt"
+ARQUIVO_PROCESSOS_PADRAO = "Testes/CasosDeTeste/processes.txt"
+ARQUIVO_SISTEMA_ARQUIVOS_PADRAO = "Testes/CasosDeTeste/files.txt"
+ARQUIVO_REFERENCIAS_PADRAO = "Testes/CasosDeTeste/string.txt"
 
 # Mensagens
-DISPATCHER_LABEL = "dispatcher =>"
-FILESYSTEM_LABEL = "Sistema de arquivos =>"
-PAGEFAULT_LABEL = "Número de Faltas de Páginas por processo:"
+ROTULO_DESPACHANTE = "dispatcher =>"
+ROTULO_SISTEMA_ARQUIVOS = "Sistema de arquivos =>"
+ROTULO_FALTAS_PAGINA = "Número de Faltas de Páginas por processo:"
 
 # Modos de leitura do Parser de Entrada
-ENABLE_PDF_COMPATIBILITY = True
+HABILITAR_COMPATIBILIDADE_PDF = True

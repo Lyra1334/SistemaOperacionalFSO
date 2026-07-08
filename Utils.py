@@ -6,85 +6,85 @@ Funções auxiliares usadas em várias partes do pseudo-SO.
 
 from typing import List
 
-from Errors import InputError
+from Erros import ErroEntrada
 
 
-def split_csv(line: str) -> List[str]:
+def dividirCsv(linha: str) -> List[str]:
     """
     Divide uma linha CSV simples, removendo espaços extras.
     """
-    return [part.strip() for part in line.strip().split(",") if part.strip() != ""]
+    return [parte.strip() for parte in linha.strip().split(",") if parte.strip() != ""]
 
 
-def parse_int(value: str, field_name: str = "valor") -> int:
+def converterInteiro(valor: str, nomeCampo: str = "valor") -> int:
     """
-    Converte um valor para inteiro, lançando InputError em caso de erro.
+    Converte um valor para inteiro, lançando ErroEntrada em caso de erro.
     """
     try:
-        return int(str(value).strip())
+        return int(str(valor).strip())
     except ValueError as exc:
-        raise InputError(f"{field_name} inválido: {value!r}") from exc
+        raise ErroEntrada(f"{nomeCampo} inválido: {valor!r}") from exc
 
 
-def parse_01(value: str, field_name: str = "valor") -> int:
+def converterBooleano(valor: str, nomeCampo: str = "valor") -> int:
     """
     Aceita estritamente representações de booleanos equivalentes a 0 ou 1,
     garantindo que qualquer outro valor inteiro ou tipo de dado seja rejeitado.
     """
-    cleaned = str(value).strip()
+    limpo = str(valor).strip()
     try:
-        val_int = int(cleaned)
-        if val_int == 1:
+        valInt = int(limpo)
+        if valInt == 1:
             return 1
-        if val_int == 0:
+        if valInt == 0:
             return 0
-        raise InputError(f"{field_name} deve ser estritamente 0 ou 1: {value!r}")
+        raise ErroEntrada(f"{nomeCampo} deve ser estritamente 0 ou 1: {valor!r}")
     except ValueError:
-        text = cleaned.lower()
-        truthy = {"true", "t", "yes", "y", "sim", "s"}
-        falsy = {"false", "f", "no", "n", "nao", "não"}
+        texto = limpo.lower()
+        verdadeiro = {"true", "t", "yes", "y", "sim", "s"}
+        falso = {"false", "f", "no", "n", "nao", "não"}
 
-        if text in truthy:
+        if texto in verdadeiro:
             return 1
 
-        if text in falsy:
+        if texto in falso:
             return 0
 
-        raise InputError(f"{field_name} deve ser bool/int equivalente a 0 ou 1: {value!r}")
+        raise ErroEntrada(f"{nomeCampo} deve ser bool/int equivalente a 0 ou 1: {valor!r}")
 
 
-def read_non_empty_lines(path: str) -> List[str]:
+def lerLinhasNaoVazias(caminho: str) -> List[str]:
     """
     Lê um arquivo e retorna apenas as linhas não vazias.
     """
     try:
-        with open(path, "r", encoding="utf-8") as file:
-            return [line.strip() for line in file if line.strip()]
+        with open(caminho, "r", encoding="utf-8") as arquivo:
+            return [linha.strip() for linha in arquivo if linha.strip()]
     except FileNotFoundError as exc:
-        raise InputError(f"Arquivo não encontrado: {path}") from exc
+        raise ErroEntrada(f"Arquivo não encontrado: {caminho}") from exc
 
 
-def format_blocks(blocks: List[int]) -> str:
+def formatarBlocos(blocos: List[int]) -> str:
     """
     Formata uma lista de blocos no padrão:
     0
     0 e 1
     0, 1 e 2
     """
-    if not blocks:
+    if not blocos:
         return ""
 
-    if len(blocks) == 1:
-        return str(blocks[0])
+    if len(blocos) == 1:
+        return str(blocos[0])
 
-    return ", ".join(str(block) for block in blocks[:-1]) + f" e {blocks[-1]}"
+    return ", ".join(str(bloco) for bloco in blocos[:-1]) + f" e {blocos[-1]}"
 
 
-def format_page_faults(count: int) -> str:
+def formatarFaltasPagina(quantidade: int) -> str:
     """
     Formata a quantidade de faltas de página com singular/plural.
     """
-    if count == 1:
+    if quantidade == 1:
         return "1 falta de página"
 
-    return f"{count} faltas de páginas"
+    return f"{quantidade} faltas de páginas"
