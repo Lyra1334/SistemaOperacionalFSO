@@ -245,16 +245,13 @@ class Disk:
 
     def map_as_text(self) -> str:
         """
-        Retorna o mapa do disco exatamente como esperado
-        no exemplo do trabalho.
+        Retorna o mapa de ocupação do disco formatado com barras verticais
+        e espaços para cada bloco, cobrindo a capacidade total.
         """
-
-        disk = self.disk[:]
-
-        while (
-            disk
-            and disk[-1] == Config.FREE_BLOCK
-        ):
-            disk.pop()
-
-        return " ".join(disk)
+        parts = []
+        for block in self.disk:
+            if block == Config.FREE_BLOCK:
+                parts.append("  ")
+            else:
+                parts.append(f" {block} ")
+        return "|" + "|".join(parts) + "|"

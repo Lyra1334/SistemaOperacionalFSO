@@ -403,12 +403,13 @@ class Disk:
         return None
 
     def map_as_text(self) -> str:
-        disk_copy = self.disk[:]
-
-        while disk_copy and disk_copy[-1] == '0':
-            disk_copy.pop()
-
-        return ' '.join(disk_copy)
+        parts = []
+        for block in self.disk:
+            if block == '0':
+                parts.append("  ")
+            else:
+                parts.append(f" {block} ")
+        return "|" + "|".join(parts) + "|"
 
 
 class FileSystemParser:

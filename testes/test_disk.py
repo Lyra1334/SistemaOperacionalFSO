@@ -69,13 +69,13 @@ class TestDisk(unittest.TestCase):
 
     def test_map_as_text_trimming(self) -> None:
         """
-        Testa a formatação e remoção de zeros à direita no mapa de blocos.
+        Testa a formatação de mapa de blocos usando barras verticais e espaços.
         """
         disk = Disk(10, [("A", 0, 2), ("B", 4, 1)])
         # Vetor: ["A", "A", "0", "0", "B", "0", "0", "0", "0", "0"]
-        # Deve remover zeros à direita, restando apenas até o "B"
+        # Deve retornar o mapa completo formatado com barras, sem realizar o trim
         text = disk.map_as_text()
-        self.assertEqual(text, "A A 0 0 B")
+        self.assertEqual(text, "| A | A |  |  | B |  |  |  |  |  |")
 
 if __name__ == '__main__':
     unittest.main()

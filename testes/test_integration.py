@@ -30,7 +30,7 @@ class TestSOIntegration(unittest.TestCase):
         
         # Deve ter o mapa do disco
         self.assertIn("Mapa de ocupação do disco:", text)
-        self.assertIn("D D D Y 0 Z Z Z", text)
+        self.assertIn("| D | D | D | Y |  | Z | Z | Z |  |  |", text)
         
         # Deve ter o contador de page faults correto
         self.assertIn("P0 = 6 faltas de páginas", text)
@@ -61,7 +61,7 @@ class TestSOIntegration(unittest.TestCase):
         
         # Mapa do disco esperado para este caso
         self.assertIn("Mapa de ocupação do disco:", text)
-        self.assertIn("X X 0 Y 0 Z Z Z", text)
+        self.assertIn("| X | X |  | Y |  | Z | Z | Z |  |  |", text)
         
         # Contagem de page faults esperada
         self.assertIn("P0 = 10 faltas de páginas", text)
