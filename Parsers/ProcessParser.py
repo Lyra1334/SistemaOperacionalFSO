@@ -20,6 +20,11 @@ class ProcessParser:
         process_lines = read_non_empty_lines(processes_path)
         string_lines = read_non_empty_lines(strings_path)
 
+        if len(process_lines) > 1000:
+            raise InputError(
+                f"Quantidade de processos ({len(process_lines)}) excede o limite do sistema (máximo 1000)."
+            )
+
         if len(process_lines) != len(string_lines):
             raise InputError(
                 f"Quantidade de processos ({len(process_lines)}) diferente "
@@ -48,9 +53,13 @@ class ProcessParser:
 
             if arrival_time < 0:
                 raise InputError("Tempo de inicialização não pode ser negativo.")
+            if arrival_time > 1000000:
+                raise InputError("Tempo de inicialização muito grande.")
 
-            if cpu_time < 0:
-                raise InputError("Tempo de processador não pode ser negativo.")
+            if cpu_time <= 0:
+                raise InputError("Tempo de processador deve ser maior que zero.")
+            if cpu_time > 1000000:
+                raise InputError("Tempo de processador muito grande.")
 
             if working_set <= 0:
                 raise InputError("Working set deve ser maior que zero.")
@@ -64,10 +73,19 @@ class ProcessParser:
                 modem = 0
                 sata = 0
 
-            references = [
-                parse_int(page, "página")
-                for page in split_csv(string_lines[pid])
-            ]
+            references = []
+            for page_str in split_csv(string_lines[pid]):
+                page = parse_int(page_str, "página")
+                if page < 0:
+                    raise InputError(f"Número de página não pode ser negativo: {page}")
+                
+                # Limitação teórica de endereçamento virtual de 16 bits (máximo 64 páginas de 1 KB).
+                # Caso haja necessidade de suportar referências a páginas lógicas maiores que 63 na simulação,
+                # a restrição abaixo pode ser comentada ou removida.
+                if page > 63:
+                    raise InputError(f"Número de página excede o limite de endereçamento virtual de 16 bits (máximo 63): {page}")
+                
+                references.append(page)
 
             processes.append(
                 Process(

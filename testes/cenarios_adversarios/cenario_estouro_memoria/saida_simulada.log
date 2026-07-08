@@ -1,0 +1,10 @@
+dispatcher => Processo 0 rejeitado: working set maior que a Ã¡rea de memÃ³ria permitida.
+dispatcher => Processo 1 rejeitado: working set maior que a Ã¡rea de memÃ³ria permitida.
+Sistema de arquivos =>
+OperaÃ§Ã£o 1 => Falha
+O processo 0 nÃ£o pode realizar operaÃ§Ãµes de arquivos porque foi rejeitado.
+Mapa de ocupaÃ§Ã£o do disco:
+
+NÃºmero de Faltas de PÃ¡ginas por processo:
+P0 = 0 faltas de pÃ¡ginas
+P1 = 0 faltas de pÃ¡ginas

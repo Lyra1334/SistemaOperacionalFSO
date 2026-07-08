@@ -82,6 +82,7 @@ class Scheduler:
                     f"dispatcher => Processo {process.pid} rejeitado: "
                     "working set maior que a área de memória permitida."
                 )
+                process.is_rejected = True
                 self.finished.append(process)
                 continue
 
@@ -90,6 +91,7 @@ class Scheduler:
                     f"dispatcher => Processo {process.pid} rejeitado: "
                     "requer mais recursos do que o possúido pelo sistema."
                 )
+                process.is_rejected = True
                 self.finished.append(process)
                 continue
 
@@ -168,6 +170,7 @@ class Scheduler:
             self.resources.release(process)
             self.finished.append(process)
             self._aging()
+            self.last_pid = None
             return
 
         if not process.is_realtime:

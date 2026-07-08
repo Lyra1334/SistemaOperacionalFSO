@@ -492,9 +492,9 @@ def main(argv: List[str]) -> int:
     if len(argv) == 4:
         processes_path, files_path, strings_path = argv[1], argv[2], argv[3]
     else:
-        processes_path = "casosDeTeste/processes.txt"
-        files_path = "casosDeTeste/files.txt"
-        strings_path = "casosDeTeste/string.txt"
+        processes_path = "testes/casosDeTeste/processes.txt"
+        files_path = "testes/casosDeTeste/files.txt"
+        strings_path = "testes/casosDeTeste/string.txt"
 
     try:
         processes = ProcessParser.load(processes_path, strings_path)

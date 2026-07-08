@@ -14,6 +14,7 @@ from typing import Dict
 
 import Config
 
+from Errors import ResourceManagerError
 from Models.Process import Process
 
 
@@ -27,6 +28,7 @@ class ResourceManager:
             "modem": Config.TOTAL_MODEMS,
             "sata": Config.TOTAL_SATA_DRIVES,
         }
+        self.active_allocations: Dict[int, Dict[str, int]] = {}
     
     def verify_process(self, process:Process) -> bool:
         """
@@ -92,6 +94,9 @@ class ResourceManager:
         for resource, quantity in required.items():
             self.available[resource] -= quantity
 
+        if any(quantity > 0 for quantity in required.values()):
+            self.active_allocations[process.pid] = required
+
         return True
 
     def release(self, process: Process) -> None:
@@ -100,6 +105,14 @@ class ResourceManager:
         """
 
         required = self.required(process)
+        has_resources = any(quantity > 0 for quantity in required.values())
+
+        if has_resources:
+            if process.pid not in self.active_allocations:
+                raise ResourceManagerError(
+                    f"Tentativa de liberar recursos não alocados para o processo {process.pid}."
+                )
+            self.active_allocations.pop(process.pid)
 
         for resource, quantity in required.items():
             self.available[resource] += quantity
@@ -115,6 +128,7 @@ class ResourceManager:
             "modem": Config.TOTAL_MODEMS,
             "sata": Config.TOTAL_SATA_DRIVES,
         }
+        self.active_allocations.clear()
 
     def get_available_resources(self) -> Dict[str, int]:
         """

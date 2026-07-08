@@ -25,6 +25,7 @@ class Process:
     last_used: Dict[int, int] = field(default_factory=dict)
 
     memory_simulated: bool = False
+    is_rejected: bool = False
 
     def __post_init__(self) -> None:
         self.remaining_time = self.cpu_time

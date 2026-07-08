@@ -38,6 +38,14 @@ class FileSystemParser:
             )
 
         disk_size = parse_int(lines[0], "Quantidade de blocos do disco")
+        
+        # Restrição física do tamanho do disco simulado (máximo de 32 MB / 32768 blocos de 1 KB).
+        # Este limite pode ser alterado se houver necessidade de simular capacidades maiores.
+        if disk_size <= 0 or disk_size > 32768:
+            raise InputError(
+                "Quantidade de blocos do disco deve ser entre 1 e 32768."
+            )
+
         occupied_count = parse_int(
             lines[1],
             "Quantidade de segmentos ocupados"
@@ -67,6 +75,13 @@ class FileSystemParser:
             filename = parts[0]
             first_block = parse_int(parts[1], "Primeiro bloco")
             block_count = parse_int(parts[2], "Quantidade de blocos")
+
+            if first_block < 0 or first_block >= disk_size:
+                raise InputError(f"Bloco inicial {first_block} fora dos limites do disco (0-{disk_size-1}).")
+            if block_count <= 0:
+                raise InputError("Quantidade de blocos do segmento deve ser maior que zero.")
+            if first_block + block_count > disk_size:
+                raise InputError(f"Segmento do arquivo {filename} excede o tamanho do disco.")
 
             occupied_segments.append(
                 (
@@ -102,6 +117,11 @@ class FileSystemParser:
                     parts[3],
                     "Quantidade de blocos"
                 )
+
+                if blocks <= 0:
+                    raise InputError("Quantidade de blocos para criação deve ser maior que zero.")
+                if blocks > disk_size:
+                    raise InputError(f"Tentativa de criar arquivo '{filename}' com tamanho maior que a capacidade total do disco.")
 
                 operations.append(
                     FileOperation(

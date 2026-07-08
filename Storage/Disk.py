@@ -81,11 +81,26 @@ class Disk:
 
     @staticmethod
     def _validate_name(filename: str) -> None:
-
+        """
+        Realiza a validação lógica do nome do arquivo simulado.
+        
+        Restrições aplicadas para garantir a integridade dos parsers e do layout de saída:
+        - Espaços ou quebras de linha são proibidos para evitar desalinhamento no mapa do disco impresso.
+        - Vírgulas são proibidas para manter a integridade do formato de leitura de dados (CSV).
+        - Barras e contra-barras barram injeções de caminhos relativos na representação do disco lógico.
+        
+        Caso haja necessidade de flexibilizar essas restrições, pode-se inserir um 'return'
+        no início desta função para ignorar as validações.
+        """
         if (
             not filename
             or filename == Config.FREE_BLOCK
             or "," in filename
+            or any(c.isspace() for c in filename)
+            or "/" in filename
+            or "\\" in filename
+            or "\x00" in filename
+            or any(not (c.isalnum() or c in ".-_") for c in filename)
         ):
             raise FileSystemError(
                 f"Nome de arquivo inválido: {filename}"
@@ -98,7 +113,14 @@ class Disk:
         length: int
     ) -> Tuple[bool, str]:
 
-        self._validate_name(filename)
+        try:
+            self._validate_name(filename)
+        except FileSystemError as exc:
+            return (
+                False,
+                f"O processo {pid} não pode criar o arquivo "
+                f"{filename} (nome inválido)."
+            )
 
         if length <= 0:
             return (
@@ -142,6 +164,15 @@ class Disk:
         filename: str,
         can_delete_any: bool
     ) -> Tuple[bool, str]:
+
+        try:
+            self._validate_name(filename)
+        except FileSystemError as exc:
+            return (
+                False,
+                f"O processo {pid} não pode deletar o arquivo "
+                f"{filename} (nome inválido)."
+            )
 
         if filename not in self.disk:
             return (

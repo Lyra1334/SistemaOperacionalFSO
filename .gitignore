@@ -1,0 +1,10 @@
+# Arquivos locais/offline (não comitar)
+Passos_para_Completar.md
+modificacoes_pre_V2.md
+relatorio_antes_depois.md
+Especificação_Implementação_2026.pdf
+Analise_Equipe/
+
+# Arquivos de cache do Python (evita poluir o Git)
+__pycache__/
+*.pyc

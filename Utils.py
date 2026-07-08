@@ -28,20 +28,29 @@ def parse_int(value: str, field_name: str = "valor") -> int:
 
 def parse_01(value: str, field_name: str = "valor") -> int:
     """
-    Aceita 0/1, True/False, S/N, Sim/Não e devolve 0 ou 1.
+    Aceita estritamente representações de booleanos equivalentes a 0 ou 1,
+    garantindo que qualquer outro valor inteiro ou tipo de dado seja rejeitado.
     """
-    text = str(value).strip().lower()
+    cleaned = str(value).strip()
+    try:
+        val_int = int(cleaned)
+        if val_int == 1:
+            return 1
+        if val_int == 0:
+            return 0
+        raise InputError(f"{field_name} deve ser estritamente 0 ou 1: {value!r}")
+    except ValueError:
+        text = cleaned.lower()
+        truthy = {"true", "t", "yes", "y", "sim", "s"}
+        falsy = {"false", "f", "no", "n", "nao", "não"}
 
-    truthy = {"1", "true", "t", "yes", "y", "sim", "s"}
-    falsy = {"0", "false", "f", "no", "n", "nao", "não"}
+        if text in truthy:
+            return 1
 
-    if text in truthy:
-        return 1
+        if text in falsy:
+            return 0
 
-    if text in falsy:
-        return 0
-
-    raise InputError(f"{field_name} deve ser bool/int equivalente a 0 ou 1: {value!r}")
+        raise InputError(f"{field_name} deve ser bool/int equivalente a 0 ou 1: {value!r}")
 
 
 def read_non_empty_lines(path: str) -> List[str]:

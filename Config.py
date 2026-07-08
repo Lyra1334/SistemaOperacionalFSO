@@ -22,9 +22,9 @@ CREATE_OPERATION = 0
 DELETE_OPERATION = 1
 
 # Diretórios padrão
-DEFAULT_PROCESSES_FILE = "casosDeTeste/processes.txt"
-DEFAULT_FILESYSTEM_FILE = "casosDeTeste/files.txt"
-DEFAULT_REFERENCES_FILE = "casosDeTeste/string.txt"
+DEFAULT_PROCESSES_FILE = "testes/casosDeTeste/processes.txt"
+DEFAULT_FILESYSTEM_FILE = "testes/casosDeTeste/files.txt"
+DEFAULT_REFERENCES_FILE = "testes/casosDeTeste/string.txt"
 
 # Mensagens
 DISPATCHER_LABEL = "dispatcher =>"
