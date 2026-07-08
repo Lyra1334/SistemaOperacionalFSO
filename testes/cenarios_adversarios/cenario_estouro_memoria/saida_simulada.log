@@ -35,6 +35,7 @@ Sistema de arquivos =>
 
 Operação 1 => Sucesso
 O processo 0 criou o arquivo A (blocos 0 e 1).
+
 Mapa de ocupação do disco:
 | A | A |  |  |  |  |  |  |  |  |
 Número de Faltas de Páginas por processo:

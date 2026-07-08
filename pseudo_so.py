@@ -473,6 +473,7 @@ class FileSystemRunner:
             ok, message = self._execute_operation(operation)
             print(f"Operação {index} => {'Sucesso' if ok else 'Falha'}")
             print(message)
+            print()
         print('Mapa de ocupação do disco:')
         print(self.disk.map_as_text())
 

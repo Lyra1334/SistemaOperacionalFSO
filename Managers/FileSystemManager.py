@@ -49,6 +49,7 @@ class FileSystemManager:
 
             print(f"Operação {index} => {status}")
             print(message)
+            print()
 
         print("Mapa de ocupação do disco:")
         print(self.disk.map_as_text())

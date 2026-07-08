@@ -90,18 +90,25 @@ Sistema de arquivos =>
 
 Operação 1 => Sucesso
 O processo 1 criou o arquivo A (blocos 5, 6, 7, 8 e 9).
+
 Operação 2 => Falha
 O processo 2 não pode deletar o arquivo A porque não é o dono.
+
 Operação 3 => Falha
 O processo 1 não pode deletar o arquivo Y porque não foi criado por ele.
+
 Operação 4 => Sucesso
 O processo 0 deletou o arquivo Y.
+
 Operação 5 => Falha
 O processo 99 não existe.
+
 Operação 6 => Falha
 O processo -1 não existe.
+
 Operação 7 => Falha
 O processo 1 não pode criar o arquivo A (arquivo já existe).
+
 Mapa de ocupação do disco:
 | X | X |  |  |  | A | A | A | A | A |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 Número de Faltas de Páginas por processo:

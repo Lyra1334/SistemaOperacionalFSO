@@ -119,14 +119,19 @@ Sistema de arquivos =>
 
 Operação 1 => Sucesso
 O processo 0 deletou o arquivo X.
+
 Operação 2 => Sucesso
 O processo 1 criou o arquivo A (blocos 5, 6, 7 e 8).
+
 Operação 3 => Sucesso
 O processo 2 criou o arquivo B (blocos 9, 10 e 11).
+
 Operação 4 => Sucesso
 O processo 1 deletou o arquivo A.
+
 Operação 5 => Sucesso
 O processo 3 criou o arquivo C (blocos 12, 13, 14, 15 e 16).
+
 Mapa de ocupação do disco:
 |  |  | Y | Y | Y |  |  |  |  | B | B | B | C | C | C | C | C |  |  |  |
 Número de Faltas de Páginas por processo:
